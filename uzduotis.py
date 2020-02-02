@@ -76,7 +76,7 @@ def exercise1_7():
     db_query(query)
 
 open_connection()
-exercise1_5()
+exercise1_7()
 close_connection(sqlite3.connect("exercise.db"))
 
 
