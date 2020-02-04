@@ -72,11 +72,96 @@ def exercise1_6():
 def exercise1_7():
     query = """SELECT last_name
                 FROM employees 
-                WHERE last_name LIKE '__e___'"""
+                WHERE last_name LIKE '__e%'"""
+    db_query(query)
+
+def exercise2_1():
+    query = """ SELECT COUNT (DISTINCT job_id)
+                FROM employees"""
+    db_query(query)
+
+def exercise2_2():
+    query = """ SELECT SUM(salary)
+                FROM employees"""
+    db_query(query)
+
+def exercise2_3():
+    query = """ SELECT MIN(salary)
+                FROM employees"""
+    db_query(query)
+
+def exercise2_4():
+    query = """ SELECT MAX(salary)
+                FROM employees"""
+    db_query(query)
+
+def exercise2_5():
+    query = """ SELECT AVG(salary), COUNT(employee_id)
+                FROM employees
+                WHERE department_id = 90"""
+    db_query(query)
+
+def exercise2_6():
+    query = """ SELECT MAX(salary), MIN(salary), AVG(salary), SUM(salary)
+                FROM employees"""
+    db_query(query)
+
+def exercise2_7():
+    query = """ SELECT  COUNT(DISTINCT job_id)
+               FROM employees"""
+    db_query(query)
+
+def exercise2_8():
+    query = """SELECT MAX(salary) - MIN(salary)
+               FROM employees """
+    db_query(query)
+
+def exercise2_9():
+    query = """ SELECT department_id, SUM(salary)
+                FROM employees
+                GROUP BY department_id"""
+    db_query(query)
+
+def exercise2_10():
+    query = """ SELECT job_id, AVG(salary)
+                FROM employees
+                WHERE job_id <> 'IT_PROG'
+                GROUP BY job_id"""
+    db_query(query)
+
+def exercise2_11():
+    query = """ SELECT manager_id, MIN(salary)
+                FROM employees
+                GROUP BY manager_id"""
+    db_query(query)
+
+def exercise3_01():
+    query = """ SELECT first_name, last_name, salary
+                FROM employees
+                WHERE salary > 
+                (SELECT salary FROM employees WHERE last_name='Bull')"""
+    db_query(query)
+
+def exercise3_02():
+    query = """SELECT first_name, last_name
+                FROM employees
+                WHERE (employee_id IN (SELECT manager_id FROM employees))"""
+    db_query(query)
+
+def exercise3_03():
+    query = """SELECT First_name, last_name, salary
+                FROM employees
+                WHERE salary > (SELECT AVG(salary) FROM employees)"""
+    db_query(query)
+
+def exercise3_04():
+    query = """ SELECT first_name, last_name, salary
+                FROM employees
+                WHERE salary = (SELECT MIN(salary) FROM employees)"""
     db_query(query)
 
 open_connection()
-exercise1_7()
+exercise3_04()
 close_connection(sqlite3.connect("exercise.db"))
 
 
