@@ -160,8 +160,94 @@ def exercise3_04():
                 WHERE salary = (SELECT MIN(salary) FROM employees)"""
     db_query(query)
 
+def exercise3_05():
+    query = """ SELECT first_name, last_name, salary
+                FROM employees 
+                WHERE salary > (SELECT AVG(salary) FROM employees) AND 
+                department_id IN (SELECT department_id FROM departments WHERE depart_name LIKE "%IT%")"""
+    db_query(query)
+
+def exercise3_06():
+    query = """SELECT salary 
+               FROM employees
+               ORDER BY salary DESC 
+               LIMIT 3"""
+    db_query(query)
+
+def exercise3_07():
+    query = """SELECT first_name, last_name
+               FROM employees
+               WHERE manager_id IN (SELECT manager_id FROM departments WHERE location_id IN 
+               (SELECT location_id FROM locations WHERE country_id LIKE "%US%"))              
+               """
+    db_query(query)
+
+#Write a query to get the department name and number of employees in the department
+def exercise4_01():
+    query = """SELECT departments.depart_name, COUNT(employees.employee_id)
+               FROM employees
+               INNER JOIN departments
+                    ON employees.department_id = departments.department_id
+                GROUP BY depart_name"""
+    db_query(query)
+
+#Write a query to display the department ID, department name, and managers first name.
+def exercise4_02():
+    query = """ SELECT employees.first_name, employees.manager_id, departments.depart_name, employees.department_id
+                FROM employees
+                INNER JOIN departments
+                    ON employees.department_id = departments.department_id"""
+    db_query(query)
+
+#Write a query to display the department name, manager name, and city.
+def exercise4_03():
+    query = """ SELECT employees.first_name, locations.city, departments.depart_name
+                FROM employees
+                JOIN departments
+                    ON employees.manager_id = departments.manager_id
+                JOIN locations ON departments.Location_ID = locations.location_id
+                 """
+    db_query(query)
+
+#Write a query to display the job history that was done by any employee who is currently drawing more than 10000 of salary.
+def exercise4_04():
+    query = """SELECT job_history.*
+               FROM job_history
+               JOIN employees
+                  ON job_history.employee_id = employees.employee_id
+               WHERE salary > 10000"""
+    db_query(query)
+
+
+#Write a query to display the job title and average salary of employees.
+def exercise4_05():
+    query = """SELECT Job_Title, AVG(salary)
+                FROM employees
+                JOIN jobs
+                    ON employees.job_id = jobs.Job_ID
+                GROUP BY job_Title"""
+    db_query(query)
+
+def exercise4_06():
+    query = """SELECT employee_ID, Job_Title, end_date - start_date
+                FROM job_history
+                JOIN Jobs
+                    ON jobs.Job_ID = job_history.job_id
+                WHERE department_id = 90"""
+    db_query(query)
+
+#Write a query to find the names (first_name, last_name) and hire date of the employees who were hired after 'Jones'
+def exercise4_07():
+    query = """ SELECT employees.first_name, employees.last_name, employees.hire_date
+                FROM employees
+                JOIN employees Jones
+                    ON Jones.last_name = "Jones"
+                WHERE employees.hire_date > Jones.hire_date """
+    db_query(query)
+
+
 open_connection()
-exercise3_04()
+exercise4_07()
 close_connection(sqlite3.connect("exercise.db"))
 
 
